@@ -13,14 +13,14 @@ import ru.dubinin.application.api.CatServiceDelegate
 
 class ListAdapter(private val coroutineScope: CoroutineScope) : RecyclerView.Adapter<ViewHolder>() {
 
-    var _items = ArrayList<DeferredHolder<String?>>()
+    private var _items = ArrayList<DeferredHolder<String?>>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_view, parent, false)
         val viewHolder = ViewHolder(view)
 
         view.setOnClickListener {
-            if (!viewHolder.isSuccessful) {
+            if (viewHolder.imageState == ImageState.EMPTY) {
                 viewHolder.onClick(coroutineScope.async { CatServiceDelegate.getCatImageUrl() })
             }
         }

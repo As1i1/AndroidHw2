@@ -19,7 +19,7 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
 
     private var deferredUrl: DeferredHolder<String?>? = null
-    var isSuccessful = false
+    var imageState = ImageState.EMPTY
         private set
 
     fun bind(url: DeferredHolder<String?>) {
@@ -46,20 +46,20 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun setStartState() {
-        isSuccessful = false
+        imageState = ImageState.LOADING
         image.setImageDrawable(null)
         text.text = WAITING_MESSAGE
         progressBar.visibility = View.VISIBLE
     }
 
     private fun setSuccessState() {
-        isSuccessful = true
+        imageState = ImageState.LOADED
         text.text = SUCCESS_MESSAGE
         progressBar.visibility = View.INVISIBLE
     }
 
     private fun setFailState() {
-        isSuccessful = false
+        imageState = ImageState.EMPTY
         text.text = FAIL_MESSAGE
         progressBar.visibility = View.INVISIBLE
     }
